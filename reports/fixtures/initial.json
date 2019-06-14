@@ -1,0 +1,251 @@
+[
+    {
+        "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "admin", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2014-03-24T09:23:06.825", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "pbkdf2_sha256$12000$1iqhlTrJcrB0$/3VovgB0vKAxlhqZSkv1hynJvFRj8/uFCfY/ObQXoWo=", 
+            "email": "tkopecek@redhat.com", 
+            "date_joined": "2014-03-24T09:23:06.825"
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 1,
+        "fields": {
+            "name": "CZEP001944",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 2,
+        "fields": {
+            "name": "CZEP001944",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 3,
+        "fields": {
+            "name": "AFGKP000168",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 4,
+        "fields": {
+            "name": "CZEP001944",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 5,
+        "fields": {
+            "name": "CZEP002738",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 6,
+        "fields": {
+            "name": "CZEP00286",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 7,
+        "fields": {
+            "name": "CZEP002868",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 8,
+        "fields": {
+            "name": "CZEP002876",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 9,
+        "fields": {
+            "name": "CZEP002887",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 10,
+        "fields": {
+            "name": "CZEP002928",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 11,
+        "fields": {
+            "name": "CZEP002928 ",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 12,
+        "fields": {
+            "name": "CZEP002931 ",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 13,
+        "fields": {
+            "name": "CZEP002933",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 14,
+        "fields": {
+            "name": "CZEP002936",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 15,
+        "fields": {
+            "name": "CZEP002941",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 16,
+        "fields": {
+            "name": "CZEP002945",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 17,
+        "fields": {
+            "name": "CZEP002947",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.code",
+        "pk": 18,
+        "fields": {
+            "name": "CZEP002958",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 1,
+        "fields": {
+            "name": "CTR",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 2,
+        "fields": {
+            "name": "FJS",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 3,
+        "fields": {
+            "name": "FND",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 4,
+        "fields": {
+            "name": "JSN",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 5,
+        "fields": {
+            "name": "LPR",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 6,
+        "fields": {
+            "name": "MIG",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 7,
+        "fields": {
+            "name": "OST",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 8,
+        "fields": {
+            "name": "PSI",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 9,
+        "fields": {
+            "name": "RDD",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.section",
+        "pk": 10,
+        "fields": {
+            "name": "VAR",
+            "active": true
+        }
+    },
+    {
+        "model": "reports.campaign",
+        "pk": 1,
+        "fields": {
+            "name": "FND_KP_Videa_25%_zhlednuti_NOV18_ZDS"
+        }
+    }
+]
