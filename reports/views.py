@@ -41,7 +41,6 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     filterset_class = InvoiceFilter
 
     def get_invoice(self, invoice_id):
-        '''
         try:
             return requests.get("%s/api/pdf/%d" % (settings.PDF_ANALYZER_URL, invoice_id)).json()
         except Exception:
@@ -65,6 +64,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
             "totalPaid": 101.00,
             "transactionId": "sampleTransactionId"
         }
+        '''
 
     def create(self, request):
         serializer = ImportPdfSerializer(data=request.data)
