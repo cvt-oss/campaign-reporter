@@ -241,11 +241,4 @@
             "active": true
         }
     },
-    {
-        "model": "reports.campaign",
-        "pk": 1,
-        "fields": {
-            "name": "FND_KP_Videa_25%_zhlednuti_NOV18_ZDS"
-        }
-    }
 ]

@@ -1,26 +1,26 @@
 from django.contrib import admin
 
-from .models import Code, Section, Request, Invoice, InvoiceRow, Campaign
+from .models import Code, Section, Request, Invoice, Campaign
 
-admin.site.register(Code)
-admin.site.register(Section)
-admin.site.register(Request)
 
-class InvoiceRowAdmin(admin.TabularInline):
-    model = InvoiceRow
-    extra = 1
+class RequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text', 'approved')
+    list_filter = ('approved',)
+
+
+class CampaignAdmin(admin.TabularInline):
+    model = Campaign
+    max_num = 0
+    min_num = 0
+
 
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('transaction_id', 'dt_payment', 'total')
     date_hierarchy = 'dt_payment'
-    inlines = [InvoiceRowAdmin]
+    inlines = [CampaignAdmin]
+
+
+admin.site.register(Request, RequestAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
-
-class InvoiceRowAdminCampaign(admin.TabularInline):
-    model = InvoiceRow
-    max_num = 0
-    min_num = 0
-
-class CampaignAdmin(admin.ModelAdmin):
-    inlines = [InvoiceRowAdminCampaign]
-admin.site.register(Campaign, CampaignAdmin)
+admin.site.register(Code)
+admin.site.register(Section)
