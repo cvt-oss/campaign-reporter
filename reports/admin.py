@@ -65,7 +65,9 @@ def get_report(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=report.csv'
     writer = csv.writer(response)
-    writer.writerow(['Transaction ID', 'Name', 'Price', 'Request'])
+    writer.writerow([
+        'Profile', 'Text', 'Start', 'End', 'Budget', 'Code', 'Section', 'Target group', 'Note',
+        'Transaction ID', 'Name', 'Price', 'Request ID'])
     for invoice in queryset:
         for row in invoice.get_rows():
             writer.writerow(row)

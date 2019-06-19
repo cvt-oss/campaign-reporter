@@ -45,6 +45,10 @@ class Request(models.Model):
     approved = models.BooleanField(default=False, help_text=_('Approved by manager'))
     dt_approved = models.DateTimeField(blank=True, null=True, verbose_name=_('Approval date'))
 
+    def as_list(self):
+        return [self.id, self.profile, self.text, self.dt_start, self.dt_end,
+                self.budget, self.code, self.section, self.target_group, self.note]
+
     def shortened_text(self):
         if len(self.text) < 28:
             return self.text
@@ -68,8 +72,13 @@ class Invoice(models.Model):
         Return rows suitable for export to table
         """
         rows = []
-        for c in self.campaigns.all():
-            rows.append([self.transaction_id, c.name, c.price, c.request])
+        for c in self.campaigns.filter():
+            r = [self.transaction_id, c.name, c.price]
+            if c.request:
+                r.extend(c.request.as_list())
+            else:
+                r.extend([None] * 9)
+            rows.append(r)
         return rows
 
     def __str__(self):

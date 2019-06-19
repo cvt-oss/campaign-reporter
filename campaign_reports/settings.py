@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'reports.apps.ReportsConfig',
     'rest_framework',
+    'object_tools',
+    'import_tool.apps.ImportToolConfig',
     'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',

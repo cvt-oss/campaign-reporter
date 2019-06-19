@@ -31,6 +31,33 @@ class InvoiceFilter(filters.FilterSet):
         fields = ['id', 'min_date', 'max_date']
 
 
+def get_invoice(invoice_id):
+    try:
+        return requests.get("%s/api/pdf/%d" % (settings.PDF_ANALYZER_URL, invoice_id)).json()
+    except Exception:
+        raise ExternalServiceError(detail="PDF analyzer unavailable, try later.")
+    '''
+    return {
+        "accountId": "sampleAccountId",
+        "id": 1,
+        "invoiceItems": [{
+                "campaignName": "CampaignName1",
+                "id": 2,
+                "price": 1001.86
+            }, {
+                "campaignName": "CampaignName2",
+                "id": 3,
+                "price": 201.97
+        }],
+        "originalFileName": "invoice.pdf",
+        "paidOn": "2019-01-19T15:56",
+        "referentialNumber": "sampleRefNumber",
+        "totalPaid": 101.00,
+        "transactionId": "sampleTransactionIda"
+    }
+    '''
+
+
 class InvoiceViewSet(viewsets.ModelViewSet):
     """
     Invoice import and filtration
@@ -40,37 +67,11 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     serializer_class = InvoiceSerializer
     filterset_class = InvoiceFilter
 
-    def get_invoice(self, invoice_id):
-        try:
-            return requests.get("%s/api/pdf/%d" % (settings.PDF_ANALYZER_URL, invoice_id)).json()
-        except Exception:
-            raise ExternalServiceError(detail="PDF analyzer unavailable, try later.")
-        '''
-        return {
-            "accountId": "sampleAccountId",
-            "id": 1,
-            "invoiceItems": [{
-                    "campaignName": "CampaignName1",
-                    "id": 2,
-                    "price": 1001.86
-                }, {
-                    "campaignName": "CampaignName2",
-                    "id": 3,
-                    "price": 201.97
-            }],
-            "originalFileName": "invoice.pdf",
-            "paidOn": "2019-01-19T15:56",
-            "referentialNumber": "sampleRefNumber",
-            "totalPaid": 101.00,
-            "transactionId": "sampleTransactionId"
-        }
-        '''
-
     def create(self, request):
         serializer = ImportPdfSerializer(data=request.data)
         if serializer.is_valid():
             invoice_id = serializer.data['invoice_id']
-            data = self.get_invoice(invoice_id)
+            data = get_invoice(invoice_id)
             try:
                 invoice = Invoice.objects.get(transaction_id=data['transactionId'])
             except Invoice.DoesNotExist:
