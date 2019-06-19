@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<form method="POST" target="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>{{ form }}</table>
+    <div class="submit-row">
+        <input type="submit" value="{% trans 'Import' %}" class="default"/>
+    </div>
+</form>
+
+{% endblock %}
