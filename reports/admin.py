@@ -9,10 +9,27 @@ from .forms import CampaignModelForm, RequestAdminForm
 from .models import Code, Section, Request, Invoice, Campaign
 
 
+class WithCampaignFilter(admin.SimpleListFilter):
+    title = _('with campaign')
+    parameter_name = 'with_campaign'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('with', _('With campaign')),
+            ('without', _('Without campaign')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'with':
+            return queryset.filter(campaign__isnull=False)
+        elif self.value() == 'without':
+            return queryset.filter(campaign__isnull=True)
+
+
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'approved', 'dt_start', 'dt_end', 'dt_created')
+    list_display = ('__str__', 'approved', 'dt_start', 'dt_end', 'dt_created', 'get_invoice')
     search_fields = ('id', 'text')
-    list_filter = ('approved',)
+    list_filter = ('approved', WithCampaignFilter)
     date_hierarchy = 'dt_created'
     form = RequestAdminForm
 
@@ -27,6 +44,12 @@ class RequestAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_invoice(self, obj):
+        if obj.campaign:
+            return obj.campaign.invoice
+        else:
+            return None
+    get_invoice.short_description = _('Invoice')
 
     def get_form(self, request, obj=None, **kwargs):
         if request.user.is_superuser:
@@ -59,6 +82,7 @@ class CampaignAdmin(admin.TabularInline):
     max_num = 0
     min_num = 0
     form = CampaignModelForm
+    can_delete = False
 
 
 def get_report(modeladmin, request, queryset):
@@ -66,8 +90,8 @@ def get_report(modeladmin, request, queryset):
     response['Content-Disposition'] = 'attachment; filename=report.csv'
     writer = csv.writer(response)
     writer.writerow([
-        'Profile', 'Text', 'Start', 'End', 'Budget', 'Code', 'Section', 'Target group', 'Note',
-        'Transaction ID', 'Name', 'Price', 'Request ID'])
+        'Transaction ID', 'Name', 'Price'
+        'Profile', 'Text', 'Start', 'End', 'Budget', 'Code', 'Section', 'Target group', 'Note'])
     for invoice in queryset:
         for row in invoice.get_rows():
             writer.writerow(row)

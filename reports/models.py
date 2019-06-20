@@ -46,7 +46,7 @@ class Request(models.Model):
     dt_approved = models.DateTimeField(blank=True, null=True, verbose_name=_('Approval date'))
 
     def as_list(self):
-        return [self.id, self.profile, self.text, self.dt_start, self.dt_end,
+        return [self.profile, self.text, self.dt_start, self.dt_end,
                 self.budget, self.code, self.section, self.target_group, self.note]
 
     def shortened_text(self):
@@ -67,6 +67,16 @@ class Invoice(models.Model):
     dt_payment = models.DateTimeField(verbose_name=_('Payment date'), db_index=True)
     total = models.FloatField(default=0, verbose_name=_('Total price'))
 
+    def match(self):
+        """
+        tries to automatch relevant requests
+        """
+        matched = 0
+        for campaign in self.campaigns.all():
+            if campaign.match():
+                matched += 1
+        return matched
+
     def get_rows(self):
         """
         Return rows suitable for export to table
@@ -76,8 +86,6 @@ class Invoice(models.Model):
             r = [self.transaction_id, c.name, c.price]
             if c.request:
                 r.extend(c.request.as_list())
-            else:
-                r.extend([None] * 9)
             rows.append(r)
         return rows
 
@@ -93,8 +101,22 @@ class Campaign(models.Model):
     name = models.CharField(max_length=100)
     price = models.FloatField(default=0)
     request = models.OneToOneField(Request, on_delete=models.CASCADE, blank=True, null=True)
+    auto_matched = models.BooleanField(default=False)
 
-    def requests(self):
+    def match(self):
+        if self.request:
+            # ignore linked ones
+            return
+        requests = self.requests(queryset=True)
+        requests = requests.filter(similarity__gt=0.95)
+        if len(requests) == 1:
+            self.request = requests[0]
+            self.auto_matched = True
+            self.save()
+            return True
+        return False
+
+    def requests(self, queryset=False):
         """
         Campaign is already linked (manually, confirmed) to request
         or
@@ -104,9 +126,12 @@ class Campaign(models.Model):
            - text ~ name
         """
         if self.request:
-            return [{'approved': True, 'id': self.request.id}]
+            if queryset:
+                return Request.objects.filter(id=self.request.id)
+            else:
+                return [{'approved': True, 'id': self.request.id}]
 
-        return Request.objects.filter(
+        qset = Request.objects.filter(
             approved=True,
             dt_approved__lte=self.invoice.dt_payment,
             dt_start__lte=self.invoice.dt_payment,
@@ -115,7 +140,11 @@ class Campaign(models.Model):
             similarity=TrigramSimilarity('text', self.name)
         ).filter(
             similarity__gt=0.3
-        ).order_by('-similarity').values('id', 'similarity')[:10]
+        ).order_by('-similarity')
+        if queryset:
+            return qset
+        else:
+            qset.values('id', 'similarity')[:10]
 
     def __str__(self):
         return self.name

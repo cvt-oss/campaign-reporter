@@ -25,7 +25,7 @@ class CampaignModelForm(ModelForm):
         super().__init__(*args, **kwargs)
         qset = Request.objects.filter(campaign__isnull=True)
         if 'instance' in kwargs:
-            qset |= Request.objects.filter(campaign=kwargs['instance'])
+            qset = kwargs['instance'].requests(queryset=True)
         self.fields['request'].queryset = qset
         self.fields['request'].label_from_instance = label_for_request
 
