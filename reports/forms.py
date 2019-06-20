@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm, BooleanField, DateField, ModelChoiceField
+from django.utils.translation import gettext as _
 
 from .models import Request, Campaign
 
 class RequestAdminForm(ModelForm):
-    approved = BooleanField(disabled=True)
-    dt_approved = DateField(disabled=True)
+    approved = BooleanField(disabled=True, required=False, label=_('Approved by manager'))
+    dt_approved = DateField(disabled=True, required=False, label=_('Approval date'))
     owner = ModelChoiceField(disabled=True, queryset=User.objects.all())
 
     class Meta:
