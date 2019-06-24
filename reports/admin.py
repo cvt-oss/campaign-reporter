@@ -27,9 +27,9 @@ class WithCampaignFilter(admin.SimpleListFilter):
 
 
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'approved', 'dt_start', 'dt_end', 'dt_created', 'get_invoice')
+    list_display = ('__str__', 'approved', 'dt_start', 'dt_end', 'dt_created', 'get_invoice', 'owner')
     search_fields = ('id', 'text')
-    list_filter = ('approved', WithCampaignFilter)
+    list_filter = ('approved', WithCampaignFilter, 'owner')
     date_hierarchy = 'dt_created'
     form = RequestAdminForm
 
@@ -37,7 +37,7 @@ class RequestAdmin(admin.ModelAdmin):
         (_('Request'), {
             'fields': ('profile', 'link', 'text', 'dt_start', 'dt_end',
                        'budget', 'code', 'section', 'target_group',
-                       'note', 'email')
+                       'note')
         }),
         (_('Status'), {
             'fields': ('owner', 'approved', 'dt_approved')
@@ -55,6 +55,9 @@ class RequestAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             kwargs['form'] = ModelForm
         return super().get_form(request, obj, **kwargs)
+
+    def get_changeform_initial_data(self, request):
+        return {'owner': request.user}
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:

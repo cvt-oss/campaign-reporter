@@ -7,7 +7,7 @@ from .models import Request, Campaign
 class RequestAdminForm(ModelForm):
     approved = BooleanField(disabled=True, required=False, label=_('Approved by manager'))
     dt_approved = DateField(disabled=True, required=False, label=_('Approval date'))
-    owner = ModelChoiceField(disabled=True, queryset=User.objects.all())
+    owner = ModelChoiceField(disabled=True, required=False, queryset=User.objects.all())
 
     class Meta:
         model = Request

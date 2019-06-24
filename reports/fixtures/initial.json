@@ -51,7 +51,7 @@
             "username": "testuser",
             "first_name": "",
             "last_name": "",
-            "email": "",
+            "email": "tkopecek@redhat.com",
             "is_staff": true,
             "is_active": true,
             "date_joined": "2019-06-16T12:29:02Z",

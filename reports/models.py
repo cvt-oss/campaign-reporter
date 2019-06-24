@@ -41,7 +41,6 @@ class Request(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, help_text=_('Project section'))
     target_group = models.TextField(blank=True, help_text=_('Describe your target audience.'))
     note = models.TextField(blank=True, help_text=_('Anything else'))
-    email = models.EmailField(verbose_name=_('E-mail'), help_text=_('Contat e-mail'))
     approved = models.BooleanField(default=False, help_text=_('Approved by manager'))
     dt_approved = models.DateTimeField(blank=True, null=True, verbose_name=_('Approval date'))
 
