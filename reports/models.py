@@ -150,6 +150,5 @@ class Campaign(models.Model):
 
     class Meta:
         ordering = ('name',)
-        unique_together = ('invoice', 'name')
         verbose_name = _('Campaign in invoice')
         verbose_name_plural = _('Campaigns in invoice')

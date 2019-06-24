@@ -3,6 +3,7 @@ Service for pairing requests and invoices
 ### Installation:
 There is no need to compile anything. Running
 ```
+docker network create cvt-oss # just once
 docker-compose up --build
 ```
 
@@ -112,7 +113,7 @@ X-Frame-Options: SAMEORIGIN
 }
 ```
 
-For each campaing you can get following variants:
+For each campaign you can get following variants:
 
  1) It contains only one item with 'accepted' field. It means, that it was
  reviewed and it is 100% match of request and campaign.

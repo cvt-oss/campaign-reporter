@@ -18,7 +18,8 @@ class UploadForm(forms.Form):
     file = forms.FileField(label=_("Invoice in PDF"))
 
 def upload_invoice(pdf_file):
-    return requests.post("%s/api/pdf/invoice/process" % settings.PDF_ANALYZER_URL, data="").json()['id']
+    files = {'invoice': pdf_file}
+    return requests.post("%s/api/pdf/invoice/process" % settings.PDF_ANALYZER_URL, files=files).json()['id']
 
 def import_invoice(request, data):
     try:

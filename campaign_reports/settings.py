@@ -134,10 +134,4 @@ REST_FRAMEWORK = {
 }
 
 # project related data
-PDF_ANALYZER_URL = 'http://localhost'
-
-# override with local settings
-try:
-    from .settings_local import *
-except ImportError:
-    pass
+PDF_ANALYZER_URL = os.environ.get('PDF_ANALYZER_URL', 'http://pdf-analyzer:8080')

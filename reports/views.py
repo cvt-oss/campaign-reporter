@@ -33,29 +33,9 @@ class InvoiceFilter(filters.FilterSet):
 
 def get_invoice(invoice_id):
     try:
-        return requests.get("%s/api/pdf/%d" % (settings.PDF_ANALYZER_URL, invoice_id)).json()
+        return requests.get("%s/api/pdf/invoice/%d" % (settings.PDF_ANALYZER_URL, invoice_id)).json()
     except Exception:
         raise ExternalServiceError(detail="PDF analyzer unavailable, try later.")
-    '''
-    return {
-        "accountId": "sampleAccountId",
-        "id": 1,
-        "invoiceItems": [{
-                "campaignName": "CampaignName1",
-                "id": 2,
-                "price": 1001.86
-            }, {
-                "campaignName": "CampaignName2",
-                "id": 3,
-                "price": 201.97
-        }],
-        "originalFileName": "invoice.pdf",
-        "paidOn": "2019-01-19T15:56",
-        "referentialNumber": "sampleRefNumber",
-        "totalPaid": 101.00,
-        "transactionId": "sampleTransactionIda"
-    }
-    '''
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):

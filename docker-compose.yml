@@ -20,6 +20,13 @@ services:
             - "8000:8000"
         depends_on:
             - db
+        environment:
+            - PDF_ANALYZER_URL
 
 volumes:
     psql-data-reports:
+
+networks:
+    default:
+        external:
+            name: cvt-oss
