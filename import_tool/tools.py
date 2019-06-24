@@ -19,7 +19,6 @@ class UploadForm(forms.Form):
 
 def upload_invoice(pdf_file):
     return requests.post("%s/api/pdf/invoice/process" % settings.PDF_ANALYZER_URL, data="").json()['id']
-    #return 1
 
 def import_invoice(request, data):
     try:

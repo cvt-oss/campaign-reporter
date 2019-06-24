@@ -1,20 +1,62 @@
 [
     {
-        "pk": 1, 
-        "model": "auth.user", 
+        "model": "auth.group",
+        "pk": 1,
         "fields": {
-            "username": "admin", 
-            "first_name": "", 
-            "last_name": "", 
-            "is_active": true, 
-            "is_superuser": true, 
-            "is_staff": true, 
-            "last_login": "2014-03-24T09:23:06.825", 
-            "groups": [], 
-            "user_permissions": [], 
-            "password": "pbkdf2_sha256$12000$1iqhlTrJcrB0$/3VovgB0vKAxlhqZSkv1hynJvFRj8/uFCfY/ObQXoWo=", 
-            "email": "tkopecek@redhat.com", 
+            "name": "Requestors",
+            "permissions": [
+                [
+                    "add_request",
+                    "reports",
+                    "request"
+                ],
+                [
+                    "change_request",
+                    "reports",
+                    "request"
+                ],
+                [
+                    "view_request",
+                    "reports",
+                    "request"
+                ]
+            ]
+        }
+    },
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2014-03-24T09:23:06.825",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$12000$1iqhlTrJcrB0$/3VovgB0vKAxlhqZSkv1hynJvFRj8/uFCfY/ObQXoWo=",
+            "email": "tkopecek@redhat.com",
             "date_joined": "2014-03-24T09:23:06.825"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$12000$1iqhlTrJcrB0$/3VovgB0vKAxlhqZSkv1hynJvFRj8/uFCfY/ObQXoWo=",
+            "last_login": "2019-06-24T07:01:44Z",
+            "is_superuser": false,
+            "username": "testuser",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2019-06-16T12:29:02Z",
+            "groups": [ 1 ],
+            "user_permissions": []
         }
     },
     {

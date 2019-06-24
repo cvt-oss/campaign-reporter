@@ -5,11 +5,24 @@ There is no need to compile anything. Running
 ```
 docker-compose up --build
 ```
-should end with spawned postgresql database pre-populated with some testing
-data and admin user.
 
-Administration interface is accessible at `http://localhost:8000/admin`. Use
-dev admin account `admin/admin`.
+will spawn postgres database and setup tables. If you want to go in dev mode,
+you can then populate it with testing data. `admin` and `testuser` will get
+created and `adminadmin` is testing password for both of them.
+
+```
+docker exec cvt-oss-web-reports ./manage.py loaddata initial
+```
+
+If you want production variant, use
+
+```
+docker exec -ti cvt-oss-web-reports ./manage.py createsuperuser
+```
+
+instead to create administrator interactively with safe password.
+
+Administration interface is then accessible at `http://localhost:8000/admin`.
 
 
 ### Configuration:

@@ -4,8 +4,6 @@ services:
     db:
         container_name: cvt-oss-db-reports
         image: postgres
-        ports:
-            - "5432:5432"
         volumes:
           - "psql-data-reports:/var/lib/postgresql/data"
         environment:
@@ -13,6 +11,7 @@ services:
             - POSTGRES_USER
             - POSTGRES_DB
     web:
+        container_name: cvt-oss-web-reports
         build: .
         command: ./setup.sh
         volumes:
