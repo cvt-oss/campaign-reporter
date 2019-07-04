@@ -15,7 +15,7 @@ services:
         build: .
         command: ./setup.sh
         volumes:
-            - .:/code
+            - .:/opt/app-root/src
         ports:
             - "8000:8000"
         depends_on:
