@@ -15,6 +15,7 @@ Including another URLconf
 """
 from rest_framework import routers
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from reports import views as report_views
 import object_tools
@@ -26,6 +27,26 @@ router.register(r'invoice', report_views.InvoiceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(
+        'admin/password_reset/',
+        auth_views.PasswordResetView.as_view(),
+        name='admin_password_reset',
+    ),
+    path(
+        'admin/password_reset/done/',
+        auth_views.PasswordResetDoneView.as_view(),
+        name='password_reset_done',
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(),
+        name='password_reset_confirm',
+    ),
+    path(
+        'reset/done/',
+        auth_views.PasswordResetCompleteView.as_view(),
+        name='password_reset_complete',
+    ),
     path('object-tools/', object_tools.tools.urls),
     path('v1/', include(router.urls)),
 ]
