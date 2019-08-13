@@ -17,9 +17,14 @@ from reports import models
 class UploadForm(forms.Form):
     file = forms.FileField(label=_("Invoice in PDF"))
 
-def upload_invoice(pdf_file):
-    files = {'invoice': pdf_file}
-    return requests.post("%s/api/pdf/invoice/process" % settings.PDF_ANALYZER_URL, files=files).json()['id']
+def upload_invoice(request):
+    files = {'invoice': request.FILES['file']}
+    result = requests.post("%s/api/pdf/invoice/process" % settings.PDF_ANALYZER_URL, files=files)
+    if result.status_code != 200:
+        messages.error(request, _("Invoice PDF is broken"))
+        return None
+    else:
+        return result.json()['id']
 
 def import_invoice(request, data):
     try:
@@ -46,11 +51,12 @@ class ImportInvoice(object_tools.ObjectTool):
         modeladmin = site._registry.get(self.model)
         if request.POST:
             form = UploadForm(request.POST, request.FILES)
-            invoice_id = upload_invoice(request.FILES['file'])
-            data = get_invoice(invoice_id)
-            import_invoice(request, data)
-            if form.is_valid():
-                return modeladmin.changelist_view(request)
+            invoice_id = upload_invoice(request)
+            if invoice_id:
+                data = get_invoice(invoice_id)
+                import_invoice(request, data)
+                if form.is_valid():
+                    return modeladmin.changelist_view(request)
         else:
             form = UploadForm()
         return render(request, 'admin/import_invoice.html',
