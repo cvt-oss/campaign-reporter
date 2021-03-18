@@ -1,6 +1,6 @@
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.2.4
+Django==2.2.18
 django-filter==2.1.0
 django-object-tools==2.0.0
 djangorestframework==3.9.4
